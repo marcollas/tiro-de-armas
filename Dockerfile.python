@@ -1,0 +1,25 @@
+# Dockerfile para o Backend Python
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Instalar dependências do sistema necessárias para librosa e processamento de áudio
+RUN apt-get update && apt-get install -y \
+    libsndfile1 \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar arquivo de requisitos
+COPY scripts/requirements.txt .
+
+# Instalar dependências Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar scripts Python
+COPY scripts/ ./scripts/
+
+# Criar diretório para arquivos temporários
+RUN mkdir -p /app/temp
+
+# Comando padrão (será sobrescrito pelo docker-compose)
+CMD ["python", "--version"]

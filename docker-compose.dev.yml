@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # Backend Python para desenvolvimento
+  python-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    container_name: gunshot-detector-backend-dev
+    volumes:
+      - ./scripts:/app/scripts
+      - ./temp:/app/temp
+    networks:
+      - app-network
+    command: tail -f /dev/null
+
+  # Frontend Next.js para desenvolvimento
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    container_name: gunshot-detector-frontend-dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+      - ./temp:/app/temp
+    depends_on:
+      - python-backend
+    networks:
+      - app-network
+    command: npm run dev
+    stdin_open: true
+    tty: true
+
+networks:
+  app-network:
+    driver: bridge

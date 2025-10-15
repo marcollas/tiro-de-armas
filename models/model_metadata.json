@@ -1,0 +1,9 @@
+{
+  "sample_rate": 22050,
+  "n_mfcc": 40,
+  "n_fft": 2048,
+  "hop_length": 512,
+  "model_type": "RandomForestClassifier",
+  "n_estimators": 200,
+  "feature_dim": 208
+}
