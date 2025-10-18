@@ -10,9 +10,10 @@ services:
       - "8000:8000"
     volumes:
       - temp-data:/app/temp
-      - ./models:/app/models
       - ./data:/app/data
       - ./ml:/app/ml
+      - ./IA_EfficientNet_test:/app/IA_EfficientNet_test:ro
+      - ./graphs:/app/graphs
     networks:
       - app-network
     healthcheck:

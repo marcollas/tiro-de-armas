@@ -10,6 +10,7 @@ import logging
 
 from audio_processor import AudioProcessor
 from model_loader import ModelLoader
+from generate_audio_graphs import generate_audio_graphs
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
@@ -93,6 +94,10 @@ async def analyze_audio(file: UploadFile = File(...)):
         # Fazer predição com o modelo
         prediction = model_loader.predict(audio_features)
 
+        # gerar gráficos para analise
+        print("Gerando gráficos para análise...")
+        generate_audio_graphs(str(temp_file))
+
         # Limpar arquivo temporário
         try:
             if temp_file.exists():
@@ -110,6 +115,7 @@ async def analyze_audio(file: UploadFile = File(...)):
                     "confidence": prediction["confidence"],
                     "probability": prediction["probability"],
                     "risk_level": prediction["risk_level"],
+                    "method": prediction.get("method"),
                     "timestamp": datetime.now().isoformat(),
                 },
                 "audio_features": {

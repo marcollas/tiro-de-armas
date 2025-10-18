@@ -1,4 +1,5 @@
-FROM python:3.11-slim
+# Use TensorFlow CPU image to ensure TF/Keras availability
+FROM tensorflow/tensorflow:2.15.0
 
 WORKDIR /app
 
@@ -11,13 +12,16 @@ RUN apt-get update && apt-get install -y \
 # Copiar requirements
 COPY backend/requirements.txt .
 
-# Instalar dependências Python
-RUN pip install --no-cache-dir -r requirements.txt
+# Instalar dependências Python (TensorFlow já instalado na imagem base)
+RUN pip install --no-cache-dir -r requirements.txt || true
 
 # Copiar código do backend
 COPY backend/ .
 
 COPY ml/ /app/ml/
+
+# Copiar artefatos do modelo Keras EfficientNet
+COPY IA_EfficientNet_test/ /app/IA_EfficientNet_test/
 
 # Criar diretórios necessários
 RUN mkdir -p /app/temp /app/models /app/data/gunshots /app/data/non_gunshots
