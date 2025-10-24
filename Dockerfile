@@ -36,7 +36,7 @@ COPY --from=builder /app/public ./public
 # Criar diretório temp para uploads
 RUN mkdir -p /app/temp && chown nextjs:nodejs /app/temp
 
-COPY --from=builder /app/scripts ./scripts
+COPY --from=builder /app/tools/scripts ./scripts
 
 # Copiar arquivos de build standalone
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./

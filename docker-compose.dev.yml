@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # Backend Python para desenvolvimento
@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile.python
     container_name: gunshot-detector-backend-dev
     volumes:
-      - ./scripts:/app/scripts
+      - ./tools/scripts:/app/scripts
       - ./temp:/app/temp
     networks:
       - app-network

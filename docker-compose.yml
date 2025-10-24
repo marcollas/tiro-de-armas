@@ -11,7 +11,7 @@ services:
     volumes:
       - temp-data:/app/temp
       - ./data:/app/data
-      - ./ml:/app/ml
+      - ./tools/ml:/app/ml
       - ./IA_EfficientNet_test:/app/IA_EfficientNet_test:ro
       - ./graphs:/app/graphs
     networks:
@@ -57,4 +57,3 @@ networks:
 
 volumes:
   temp-data:
-  models-data:
