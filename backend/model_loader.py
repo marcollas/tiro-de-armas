@@ -26,6 +26,7 @@ class ModelLoader:
         # Controle de estado
         self.model = None
         self.model_framework = None  # 'tf_keras' | 'sklearn' | 'rule_based'
+        self.last_error: str | None = None
 
         # Artefatos sklearn legados (fallback)
         self.model_path = Path("models")
@@ -80,9 +81,15 @@ class ModelLoader:
                     "framework": "tf.keras",
                 }
                 logger.info("✓ Modelo Keras carregado com sucesso")
+                self.last_error = None
                 return
         except Exception as e:
             logger.error(f"Falha ao carregar modelo Keras: {e}")
+            try:
+                # Guardar erro textual para inspeção via API
+                self.last_error = str(e)
+            except Exception:
+                self.last_error = "Unknown error while loading Keras model"
 
         # 2) Fallback: tenta carregar modelo sklearn legado (se existir)
         try:
@@ -431,6 +438,7 @@ class ModelLoader:
         info = {
             **self.model_info,
             "loaded": self.is_loaded(),
+            "load_error": self.last_error,
         }
         if self.model_framework == "tf_keras":
             info.update(

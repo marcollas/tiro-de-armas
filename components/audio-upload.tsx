@@ -79,11 +79,6 @@ export function AudioUpload({ onAudioUpload }: AudioUploadProps) {
             </div>
           </div>
         </Card>
-
-        <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-          <Zap className="w-4 h-4" />
-          <span>Alimentado por modelos avançados de IA</span>
-        </div>
       </div>
     </div>
   )
